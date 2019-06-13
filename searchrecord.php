@@ -1,15 +1,19 @@
-
 <?php
-           session_start();
-
-?>
-
+session_start();
+if (!isset($_SESSION['useradmin'])) {
+    echo("
+        <script>
+          window.alert('관리자로 로그인이 필요합니다.')
+          location.href = 'index.php'
+        </script>
+        ");
+    exit;
+} else {
+    ?>
 
 <?php include "./meta.php"; ?>
 
 <!-- 메타데이터 -->
-
-
 
 <h1 class="off-screen">부경대학교 도서관</h1>
 <div id="skip-to-content">
@@ -21,19 +25,10 @@
 <?php include "./header.php"; ?>
 <!-- //Header -->
 
-
-
-
 <!-- Main Contents -->
 <div class="container-outer">
 <main class="container group" id="sub-container" role="main">
 	<div class="inner">
-
-
-
-
-
-
 
 		<!-- Contents -->
 
@@ -52,15 +47,13 @@
           //로그인 정보 외부파일 불러오기
           require_once 'db_connect.php';
 
-          $conn = new mysqli($hn, $un, $pw, $database);
+    $conn = new mysqli($hn, $un, $pw, $database);
 
 
 
-          $result = $conn->query("SELECT* FROM rentalrecord ");
+    $result = $conn->query("SELECT* FROM rentalrecord ");
 
-              $number = 1;
-          ?>
-
+    $number = 1; ?>
 
           <h2> </h2>
           <table width= "800" border="1" cellpadding="10">
@@ -73,9 +66,8 @@
 
           </tr>
           <?php
-             while ( $row = $result->fetch_assoc())
-             {
-                echo "
+             while ($row = $result->fetch_assoc()) {
+                 echo "
           	  <tr>
 
 
@@ -85,22 +77,14 @@
             <td> $row[name] </td>
 
                    ";
-                $number++;
+                 $number++;
              }
 
-
-
-
-
-          $conn->close();
-          ?>
+    $conn->close(); ?>
           </table>
 
 
 		</div>
-
-
-
 
 	</div><!-- .entry-content -->
 
@@ -110,8 +94,12 @@
 </article><!-- #post-## -->
 			</div>
 		</div><!-- //Contents -->
+  </main>
 
-
+  <?php
+  include "footer.html";
+}
+  ?>
 
 
 

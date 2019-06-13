@@ -83,7 +83,7 @@
       <h2>회원 정보 현황</h2>
           <table width= "800" border="1" cellpadding="10">
 						<tr align="center">
-	          <td bgcolor="#cccccc"><a href="http://localhost/index2.php">일련번호</a></td>
+	          <td bgcolor="#cccccc"><a href="http://localhost/jimilib/index.php">일련번호</a></td>
 	          <td bgcolor="#cccccc">아이디</td>
 	          <td bgcolor="#cccccc">이름</td>
 	          <td bgcolor="#cccccc">주소</td>
@@ -101,10 +101,8 @@
  				<tr>
  									<input type='hidden' name='mode' id='mode' value=$row[id]>
 
-
-
  							 <td> $number </td>
- 							<td> <a href='http://localhost/index2.php'>$row[id]</a> </td>
+ 							<td> <a href='http://localhost/jimilib/index.php'>$row[id]</a> </td>
  							<td> $row[name] </td>
  							<td> $row[address] </td>
  							<td> $row[phonenum] </td>
@@ -121,19 +119,7 @@
  						 ";
 
 					$number++;
-
-
-
-
 			 	 }
-
-
-
-
-
-
-
-
           $conn->close();
           ?>
           </table>
@@ -142,18 +128,6 @@
 
 
 <!-- 회원내역 -->
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	<footer class="entry-footer">

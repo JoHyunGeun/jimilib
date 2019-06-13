@@ -48,9 +48,11 @@
           <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
           <?php
 
-         $conn = new mysqli("localhost","root","111111","webpage");
+					//로그인 정보 외부파일 불러오기
+ 				 require_once 'db_connect.php';
+ 				 $conn = new mysqli($hn, $un, $pw, $database);
 
-//회원삭제
+				 //회원삭제
 
           $a=$_POST['mode'];
 
@@ -76,7 +78,7 @@
       <h2>회원 정보 현황</h2>
           <table width= "800" border="1" cellpadding="10">
           <tr align="center">
-						<td bgcolor="#cccccc"><a href="http://localhost/index2.php">일련번호</a></td>
+						<td bgcolor="#cccccc"><a href="http://localhost/jimilib/index.php">일련번호</a></td>
 	          <td bgcolor="#cccccc">아이디</td>
 	          <td bgcolor="#cccccc">이름</td>
 	          <td bgcolor="#cccccc">주소</td>
@@ -94,37 +96,31 @@
 			 		<tr>
                     <input type='hidden' name='mode' id='mode' value=$row[id]>
 
-
-
 			 					 <td> $number </td>
-			 					<td> <a href='http://localhost/index2.php'>$row[id]</a> </td>
+			 					<td> <a href='http://localhost/jimilib/index.php'>$row[id]</a> </td>
 			 					<td> $row[name] </td>
 			 					<td> $row[address] </td>
 			 					<td> $row[phonenum] </td>
 									<td> $row[email] </td>
 			 					<td> <input type='submit'  value='회원삭제'></td>
 									</form>
-
-									<form id='query' action='test2.php' method='post'>
-									<input type='hidden' name='mod' id='mod' value=$row[name]>
-
-                             </form>
 			 					</tr>
-
 			 				 ";
-
 					$number++;
 			 	 }
-
-
-
 
           $conn->close();
           ?>
           </table>
 	</div>
+	
 	</div><!-- .entry-content -->
+</main>
 
+<?php
+include "footer.html";
+}
+?>
 
 <!-- 회원내역 -->
 

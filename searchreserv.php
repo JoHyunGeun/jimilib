@@ -1,7 +1,19 @@
+<?php
+session_start();
+if (!isset($_SESSION['useradmin'])) {
+    echo("
+        <script>
+          window.alert('관리자로 로그인이 필요합니다.')
+          location.href = 'index.php'
+        </script>
+        ");
+    exit;
+} else {
+    ?>
+
 <?php include "./meta.php"; ?>
 
 <!-- 메타데이터 -->
-
 
 
 <h1 class="off-screen">부경대학교 도서관</h1>
@@ -15,18 +27,10 @@
 <!-- //Header -->
 
 
-
-
 <!-- Main Contents -->
 <div class="container-outer">
 <main class="container group" id="sub-container" role="main">
 	<div class="inner">
-
-
-
-
-
-
 
 		<!-- Contents -->
 
@@ -41,20 +45,12 @@
 				<div class="box-m bg-gray align-center">
           <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
           <?php
+                    //로그인 정보 외부파일 불러오기
+                    require_once 'db_connect.php';
 
+    $conn = new mysqli($hn, $un, $pw, $database);
 
-
-					//로그인 정보 외부파일 불러오기
-					require_once 'db_connect.php';
-
-					$conn = new mysqli($hn, $un, $pw, $database);
-
-
-
-
-          $result = $conn->query("SELECT* FROM reserv"  );
-
-          ?>
+    $result = $conn->query("SELECT* FROM reserv"); ?>
 
           <h2> 예약현황</h2>
           <table width= "800" border="1" cellpadding="10">
@@ -63,46 +59,46 @@
 					<td bgcolor="#cccccc">예약회원</td>
           <td bgcolor="#cccccc">예약도서</td>
           <td bgcolor="#cccccc">예약삭제</td>
+          <td bgcolor="#cccccc">대여</td>
 
           </tr>
           <?php
-             while ( $row = $result->fetch_assoc())
-             {
-                echo "  <tr>
+           $number =1;
+    while ($row = $result->fetch_assoc()) {
+        echo "  <tr>
 		          	  <td> $number </td>
-
-		              <td> $row[id] </td>
+		              <td> $row[userid] </td>
 		              <td> $row[title] </td>
 
 									<form id='query' action='searchreservdel.php' method='post'>
 							<input type='hidden' name='delete' id='delete' value=$row[title]>
 							<td>  <input type='submit'  value='예약삭제'></td>
 							           </form>
+                   <form id='query' action='searchreservdel.php' method='post'>
+               <input type='hidden' name='' id='delete' value=$row[title]>
+               <td>  <input type='submit'  value='대여'></td>
+                          </form>
                     </tr>
                    ";
-                $number++;
-             }
+        $number++;
+    }
 
-          $conn->close();
-          ?>
+    $conn->close(); ?>
           </table>
-
 
 		</div>
 
 
-
-
 	</div><!-- .entry-content -->
-
-	<footer class="entry-footer">
-			</footer><!-- .entry-footer -->
-
 </article><!-- #post-## -->
 			</div>
 		</div><!-- //Contents -->
+  </main>
 
-
+  <?php
+  include "footer.html";
+}
+  ?>
 
 
 <!-- //Footer -->
