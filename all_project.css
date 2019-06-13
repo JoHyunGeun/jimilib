@@ -1,0 +1,44 @@
+@font-face {
+    font-family: 'Black';
+    src: url('Font/BlackHanSans.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'NotoSans-Bold';
+    src: url('Font/NotoSans-Bold.ttf') format('truetype');
+}
+
+.my-logo:link, .my-logo:visited, .my-logo:hover {
+    text-decoration: none;
+}
+.my-logo {
+    display: inline;
+    font-family: 'Black';
+    font-size: 30px;
+    color: black;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+.headline {
+    font-family: 'Black';
+    font-size: 40px;
+    color: black;
+    text-align: center;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+.font-blue {
+    color: #0C90AD;
+}
+
+.home-top-background {
+    background-color: white;
+}
+.div-border {
+    border-style: solid;
+    border-width: 2px;
+    border-color: lightgray;
+    border-radius: 7px;
+}
