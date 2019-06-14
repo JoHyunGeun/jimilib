@@ -80,7 +80,7 @@ else {
                                         else {
                                         echo
                                             "<td> 대여중 </td>
-                                            <td'>
+                                            <td>
                                                 <form id='query' action='reservation.php' method='post'>
 										            <input type='hidden' name='title' id='title' value='$row[title]'>
                                                     <input type='hidden' name='special_features' id='special_features' value='$row[special_features]'>
