@@ -12,7 +12,7 @@ if(!isset($_SESSION['userid'])) {
 else {
 ?>
 
-<!-- meta.php -->
+    <!-- meta.php -->
     <?php include "meta.php"; ?>
     <body>
         <h1 class="off-screen">부경대학교 도서관</h1>
@@ -70,7 +70,8 @@ else {
                                             <td> $row[rating] </td>
                                             <td>
                                                 <form id='query' action='reservation.php' method='post'>
-										            <input type='hidden' name='mode' id='mode' value=$row[title]>
+										            <input type='hidden' name='title' id='title' value=$row[title]>
+                                                    <input type='hidden' name='special_features' id='special_features' value=$row[special_features]>
                                                     <input type='submit' value='예약'>
                                                 </form>
                                             </td>
@@ -87,7 +88,6 @@ else {
 		        </div>
             </main>
         </div>
-    </body>
 <?php
 include 'footer.html';
 }

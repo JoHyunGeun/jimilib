@@ -1,8 +1,11 @@
 <?php
 session_start();
-$title = $_POST['mode'];
-$id = $_SESSION['userid'];
-$query= "INSERT INTO reserv (title, id) values('$title','$id')";
+$title = $_POST['title'];
+$special_features = $_POST['special_features'];
+$userid = $_SESSION['userid'];
+require_once 'db_connect.php';
+$conn = new mysqli($hn, $un, $pw, $database);
+$query= "INSERT INTO reserv (userid, title, special_features) values('$userid', '$title', '$special_features')";
 if ($conn->query($query)==TRUE) {
     echo("
         <script>
@@ -12,6 +15,13 @@ if ($conn->query($query)==TRUE) {
         ");
     exit;
 } else {
+    echo("
+        <script>
+          window.alert('Error !')
+          history.go(-1)
+        </script>
+        ");
+    exit;
 }
 $conn->close();
 ?>

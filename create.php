@@ -66,28 +66,24 @@ Insert into membership values ('admin', '관리자', '111111', 'PKNU', '777-7777
 
 $conn3 = new mysqli($servername, $username, $password, $db);
 
-$sqll1 = "
-
+$sqll1 =
+"
 CREATE TABLE film (
-
-film_id int NOT NULL  ,
-
-
- title VARCHAR(255) NOT NULL,
-
- description TEXT null,
- release_year VARCHAR(255) null,
- language_id VARCHAR(255) null,
-original_language_id VARCHAR(255) null,
-rental_duration VARCHAR(255) null,
- rental_rate VARCHAR(255) null,
-length VARCHAR(255) null,
-replacement_cost VARCHAR(255) null,
- rating VARCHAR(255) null,
- special_features VARCHAR(255) null,
- last_update VARCHAR(255)null,
-  primary key(film_id)
-  )";
+    film_id int NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    description TEXT null,
+    release_year VARCHAR(255) null,
+    language_id VARCHAR(255) null,
+    original_language_id VARCHAR(255) null,
+    rental_duration VARCHAR(255) null,
+    rental_rate VARCHAR(255) null,
+    length VARCHAR(255) null,
+    replacement_cost VARCHAR(255) null,
+    rating VARCHAR(255) null,
+    special_features VARCHAR(255) null,
+    last_update VARCHAR(255)null,
+    primary key(film_id)
+)";
 
 if ($conn3->query($sqll1) === TRUE) {
     echo "Database created successfully";
@@ -109,14 +105,14 @@ back  varchar(255) null,
 
   $conn3->query($sqll2);
 
-  $sqll3 = "
-
-    CREATE table reserv (
-    id  varchar(255) null ,
-  title  varchar(255) not null,
-
-    primary key(title)
-    )";
+$sqll3 = "
+CREATE table reserv (
+id int not null AUTO_INCREMENT,
+userid varchar(255) not null,
+title varchar(255) not null,
+special_features varchar(255) not null,
+PRIMARY KEY(id)
+)";
 
     $conn3->query($sqll3);
     $sqll4 = "
