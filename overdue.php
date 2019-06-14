@@ -13,33 +13,39 @@ if (!isset($_SESSION['useradmin'])) {
 
 <?php include "./meta.php"; ?>
 
-<!-- 메타데이터 -->
-
-
-<h1 class="off-screen">부경대학교 도서관</h1>
-<div id="skip-to-content">
-	<a href="#sub-container">본문으로 바로가기</a>
-	<a href="#primary-menu">메인 메뉴 바로가기</a>
-</div>
-
 <!-- Header -->
 <?php include "./header.php"; ?>
 <!-- //Header -->
 
-
 <!-- Main Contents -->
 <div class="container-outer">
-<main class="container group" id="sub-container" role="main">
-	<div class="inner">
+	<main class="container group" id="sub-container" role="main">
+		<div class="inner">
 
-		<!-- Contents -->
+
+			<div class="contents no-side">
+				<div class="contents-bar group">
+          <div id="sc-all">
+              <div class="search-box" style="width:250px; margin-right: 0px;">
+            <form id="query" action="search2.php" method="post">
+              <label for=""><i class="fa fa-book" aria-hidden="true"></i> 통합검색</label>
+              <input type="text" id="query" name="query" title="검색어를 입력하세요." placeholder="검색어를 입력하세요" class="motion autocomplete query-focus eds-search-init">
+              <button type="submit" title="검색" class="ir img-tiny motion" style="margin-top:20px; ">검색</button>
+            </form>
+              </div>
+          </div>
+				</div>
+
+
+
+<!-- 대여관리 -->
 
 			<div class="article-wrap">
 
 <article id="post-70" class="post-70 page type-page status-publish hentry page_tag-44" role="article">
 
 		<header class="entry-header">
-		<h1 class="entry-title">예약관리</h1>			</header><!-- .entry-header -->
+		<h1 class="entry-title">연체관리</h1>			</header><!-- .entry-header -->
 
 	<div class="entry-content group">
 				<div class="box-m bg-gray align-center">
@@ -47,59 +53,62 @@ if (!isset($_SESSION['useradmin'])) {
           <?php
                     //로그인 정보 외부파일 불러오기
                     require_once 'db_connect.php';
+    $conn = new mysqli($hn, $un, $pw, $database); ?>
 
-    $conn = new mysqli($hn, $un, $pw, $database);
+           <h2> 연체현황</h2>
+           <table width= "800" border="1" cellpadding="10">
+           <tr align="center">
+           <td bgcolor="#cccccc">일련번호</td>
+           <td bgcolor="#cccccc">연체회원</td>
+           <td bgcolor="#cccccc">연체도서</td>
+           <td bgcolor="#cccccc">기존반납날짜</td>
+           <td bgcolor="#cccccc">연체일</td>
+           <td bgcolor="#cccccc">반납</td>
 
-    $result = $conn->query("SELECT* FROM reserv"); ?>
+           </tr>
+           <?php
+            $result = $conn->query("SELECT * FROM rental WHERE back < CURRENT_DATE()");
+            $number =1;
+            $today = new DateTime();
+            while ($row = $result->fetch_assoc()) {
+              $return = new DateTime($row[back]);
+              $diff = date_diff($return, $today);
+         echo "  <tr>
+                   <td> $number </td>
+                   <td> $row[name] </td>
+                   <td> $row[film_id] </td>
+                   <td> $row[back] </td>
+                   <td>";
+          echo $diff->format('%d 일');
+          echo "</td>
+          <form action='searchdelete.php' method='post'>
+            <td><input type='hidden' size='6' name='delete' value='$row[film_id]' >
+            <input type='submit' value='반납하기'>
+            </td>
+          </form>
+            </tr>";
 
-          <h2> 예약현황</h2>
-          <table width= "800" border="1" cellpadding="10">
-          <tr align="center">
-          <td bgcolor="#cccccc">일련번호</td>
-					<td bgcolor="#cccccc">예약회원</td>
-          <td bgcolor="#cccccc">예약도서</td>
-          <td bgcolor="#cccccc">예약삭제</td>
-          <td bgcolor="#cccccc">대여</td>
+         $number++;
+     }
+$conn->close();                  // DB 접속 끊기
+     ?>
+           </table>
 
-          </tr>
-          <?php
-           $number =1;
-    while ($row = $result->fetch_assoc()) {
-        echo "  <tr>
-		          	  <td> $number </td>
-		              <td> $row[userid] </td>
-		              <td> $row[title] </td>
 
-									<form id='query' action='searchreservdel.php' method='post'>
-							<input type='hidden' name='delete' id='delete' value=$row[title]>
-							<td>  <input type='submit'  value='예약삭제'></td>
-							           </form>
-                   <form id='query' action='searchreservdel.php' method='post'>
-               <input type='hidden' name='' id='delete' value=$row[title]>
-               <td>  <input type='submit'  value='대여'></td>
-                          </form>
-                    </tr>
-                   ";
-        $number++;
-    }
 
-    $conn->close(); ?>
-          </table>
+
+
+
 
 		</div>
+</div><!-- .entry-content -->
 
+</main>
 
-	</div><!-- .entry-content -->
-</article><!-- #post-## -->
-			</div>
-		</div><!-- //Contents -->
-  </main>
-
-  <?php
-  include "footer.html";
+<?php
+include "footer.html";
 }
-  ?>
-
+?>
 
 <!-- //Footer -->
 
@@ -151,9 +160,6 @@ var total_search = {"ajaxUrl":"https:\/\/libweb.pknu.ac.kr\/wp-admin\/admin-ajax
     ga('send', 'pageview');
 
 </script>
-
-
-
 
 </body>
 </html>
