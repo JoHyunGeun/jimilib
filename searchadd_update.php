@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['useradmin'])) {
+if(!isset($_SESSION['useradmin'])) {
     echo("
         <script>
           window.alert('관리자로 로그인이 필요합니다.')
@@ -8,12 +8,14 @@ if (!isset($_SESSION['useradmin'])) {
         </script>
         ");
     exit;
-} else {
-    ?>
+}
+else {
+?>
 
 <?php include "./meta.php"; ?>
 
 <!-- 메타데이터 -->
+
 
 
 <h1 class="off-screen">부경대학교 도서관</h1>
@@ -26,79 +28,159 @@ if (!isset($_SESSION['useradmin'])) {
 <?php include "./header.php"; ?>
 <!-- //Header -->
 
-
 <!-- Main Contents -->
 <div class="container-outer">
-<main class="container group" id="sub-container" role="main">
-	<div class="inner">
+	<main class="container group" id="sub-container" role="main">
+		<div class="inner">
 
 		<!-- Contents -->
+    <div class="contents no-side">
+			<div class="contents-bar group">
+        <div id="sc-all">
+            <div class="search-box" style="width:250px; margin-right: 0px;">
+          <form id="query" action="search2.php" method="post">
+            <label for=""><i class="fa fa-book" aria-hidden="true"></i> 통합검색</label>
+            <input type="text" id="query" name="query" title="검색어를 입력하세요." placeholder="검색어를 입력하세요" class="motion autocomplete query-focus eds-search-init">
+            <button type="submit" title="검색" class="ir img-tiny motion" style="margin-top:20px; ">검색</button>
+          </form>
+            </div>
+        </div>
+
+          </div>
+				</div>
+
+<!-- 회원검색 -->
+
 
 			<div class="article-wrap">
 
 <article id="post-70" class="post-70 page type-page status-publish hentry page_tag-44" role="article">
 
 		<header class="entry-header">
-		<h1 class="entry-title">예약관리</h1>			</header><!-- .entry-header -->
+		<h1 class="entry-title">회원관리</h1>			</header><!-- .entry-header -->
 
 	<div class="entry-content group">
 				<div class="box-m bg-gray align-center">
           <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
           <?php
-                    //로그인 정보 외부파일 불러오기
-                    require_once 'db_connect.php';
 
-    $conn = new mysqli($hn, $un, $pw, $database);
+					//로그인 정보 외부파일 불러오기
+ 				 require_once 'db_connect.php';
+ 				 $conn = new mysqli($hn, $un, $pw, $database);
 
-    $result = $conn->query("SELECT* FROM reserv"); ?>
+         //회원삭제
+          $a=$_POST['mode'];
+          if($conn->connect_error) die ("connection failed:". $conn->connect_error );
 
-          <h2> 예약현황</h2>
+          $query= "DELETE FROM membership where id='$a';";
+
+          if ($conn->query($query)==TRUE) {
+
+
+          } else {
+
+          }
+
+          $result = $conn->query("SELECT* FROM membership ");
+
+              $number = 1;
+          ?>
+
+      <h2>회원 정보 현황</h2>
           <table width= "800" border="1" cellpadding="10">
           <tr align="center">
           <td bgcolor="#cccccc">일련번호</td>
-					<td bgcolor="#cccccc">예약회원</td>
-          <td bgcolor="#cccccc">예약도서</td>
-          <td bgcolor="#cccccc">예약삭제</td>
-          <td bgcolor="#cccccc">대여</td>
+          <td bgcolor="#cccccc">아이디</td>
+          <td bgcolor="#cccccc">이름</td>
+          <td bgcolor="#cccccc">주소</td>
+          <td bgcolor="#cccccc">전화번호</td>
+          <td bgcolor="#cccccc">이메일</td>
+          <td bgcolor="#cccccc">회원정보수정</td>
+          <td bgcolor="#cccccc">회원삭제</td>
 
-          </tr>
           <?php
-           $number =1;
-    while ($row = $result->fetch_assoc()) {
-        echo "  <tr>
-		          	  <td> $number </td>
-		              <td> $row[userid] </td>
-		              <td> $row[title] </td>
+					while ( $row = $result->fetch_assoc())
+			 	 {
 
-									<form id='query' action='searchreservdel.php' method='post'>
-							<input type='hidden' name='delete' id='delete' value=$row[title]>
-							<td>  <input type='submit'  value='예약삭제'></td>
-							           </form>
-                   <form id='query' action='searchreservdel.php' method='post'>
-               <input type='hidden' name='' id='delete' value=$row[title]>
-               <td>  <input type='submit'  value='대여'></td>
+			 			echo "
+			 		          <tr>
+                    <form id='query' action='searchadd.php' method='post'>
+                      <input type='hidden' name='mode' id='mode' value=$row[id]>
+			 					              <td> $number </td>
+			 					              <td> $row[id] </td>
+			 					              <td> $row[name] </td>
+			 					              <td> $row[address] </td>
+			 					              <td> $row[phonenum] </td>
+									            <td> $row[email] </td>
+                              <td> <input type='submit'  value='회원삭제'></td>
+                            </form>
+                          <form id='query' action='searchadd_update.php' method='post'>
+                              <input type='hidden' name='id' id='id' value=$row[id]>
+                              <td> <input type='submit'  value='회원수정'></td>
                           </form>
-                    </tr>
-                   ";
-        $number++;
-    }
-
-    $conn->close(); ?>
+                     </tr>
+                	";
+					$number++;
+			 	 }
+          $conn->close();
+          ?>
           </table>
+	</div>
 
-		</div>
+  <div class="box-m bg-gray align-center">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <h2>회원 정보 수정</h2>
+    <table width= "800" border="1" cellpadding="10">
+    <tr align="center">
+    <td bgcolor="#cccccc">아이디</td>
+    <td bgcolor="#cccccc">이름</td>
+    <td bgcolor="#cccccc">주소</td>
+    </tr>
+    <form id='query' action='update.php' method='post'>
+        <tr>
+        <?php
+         $a=$_POST['id'];
+         echo
+         "<td>$a <input type='hidden' name='id' value=$a></td>
+         ";
+         ?>
+        <td><input type='text' name='name' style='width:150px;'></td>
+        <td><input type='text' name='address' style='width:150px;'></td>
+       </tr>
+       <tr>
+       <td bgcolor='#cccccc'>전화번호</td>
+       <td bgcolor='#cccccc'>이메일</td>
+       <td bgcolor='#cccccc'>정보수정</td>
+       </tr>
+       <tr>
+       <td>
+         <select class='hp' name='hp1'>
+           <option value='010'>010</option>
+           <option value='011'>011</option>
+           <option value='016'>016</option>
+           <option value='017'>017</option>
+           <option value='018'>018</option>
+           <option value='019'>019</option>
+         </select>-
+         <input type='text' class='hp' name='hp2' style='width:100px;'>-
+         <input type='text' class='hp' name='hp3' style='width:100px;'>
+       </td>
+       <td>
+         <input type='text' id='email1' name='email1'>@
+         <input type='text' name='email2'>
+       </td>
+       <td><input type='submit' value='수정' ></td>
+       </tr>
 
-
+    </table>
+</div>
 	</div><!-- .entry-content -->
-</article><!-- #post-## -->
-			</div>
-		</div><!-- //Contents -->
-  </main>
+</main>
 
-  <?php
-  include "footer.html";
+<?php
+include "footer.html";
 }
-  ?>
+?>
 
 
 <!-- //Footer -->
@@ -151,9 +233,6 @@ var total_search = {"ajaxUrl":"https:\/\/libweb.pknu.ac.kr\/wp-admin\/admin-ajax
     ga('send', 'pageview');
 
 </script>
-
-
-
 
 </body>
 </html>

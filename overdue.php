@@ -1,11 +1,17 @@
-<?php include "./meta.php"; ?>
+<?php
+session_start();
+if (!isset($_SESSION['useradmin'])) {
+    echo("
+        <script>
+          window.alert('관리자로 로그인이 필요합니다.')
+          location.href = 'index.php'
+        </script>
+        ");
+    exit;
+} else {
+    ?>
 
-<!-- 메타데이터 -->
-<h1 class="off-screen">부경대학교 도서관</h1>
-<div id="skip-to-content">
-	<a href="#sub-container">본문으로 바로가기</a>
-	<a href="#primary-menu">메인 메뉴 바로가기</a>
-</div>
+<?php include "./meta.php"; ?>
 
 <!-- Header -->
 <?php include "./header.php"; ?>
@@ -19,155 +25,90 @@
 
 			<div class="contents no-side">
 				<div class="contents-bar group">
-									<div class="all-search">
-					<form action="searchbook2.php" method='post'>
-							<label for=""><i class="fa fa-book" aria-hidden="true"></i> 통합검색</label>
-							<div class="search-box">
-								<input type="text" id="query" name="query" title="검색어를 입력하세요" placeholder="검색어를 입력하세요">
-								<button type="submit" title="검색"><i class="fa fa-search" aria-hidden="true"></i><span class="off-screen">검색</span></button>
-							</div>
-						</form>
-					</div>
+          <div id="sc-all">
+              <div class="search-box" style="width:250px; margin-right: 0px;">
+            <form id="query" action="search2.php" method="post">
+              <label for=""><i class="fa fa-book" aria-hidden="true"></i> 통합검색</label>
+              <input type="text" id="query" name="query" title="검색어를 입력하세요." placeholder="검색어를 입력하세요" class="motion autocomplete query-focus eds-search-init">
+              <button type="submit" title="검색" class="ir img-tiny motion" style="margin-top:20px; ">검색</button>
+            </form>
+              </div>
+          </div>
 				</div>
 
 
 
 <!-- 대여관리 -->
 
-
 			<div class="article-wrap">
 
 <article id="post-70" class="post-70 page type-page status-publish hentry page_tag-44" role="article">
 
 		<header class="entry-header">
-		<h1 class="entry-title">대여관리</h1>			</header><!-- .entry-header -->
+		<h1 class="entry-title">연체관리</h1>			</header><!-- .entry-header -->
 
 	<div class="entry-content group">
 				<div class="box-m bg-gray align-center">
           <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
           <?php
-					//로그인 정보 외부파일 불러오기
-					require_once 'db_connect.php';
+                    //로그인 정보 외부파일 불러오기
+                    require_once 'db_connect.php';
+    $conn = new mysqli($hn, $un, $pw, $database); ?>
 
-					$conn = new mysqli($hn, $un, $pw, $database);
-                 // DB 선택
+           <h2> 연체현황</h2>
+           <table width= "800" border="1" cellpadding="10">
+           <tr align="center">
+           <td bgcolor="#cccccc">일련번호</td>
+           <td bgcolor="#cccccc">연체회원</td>
+           <td bgcolor="#cccccc">연체도서</td>
+           <td bgcolor="#cccccc">기존반납날짜</td>
+           <td bgcolor="#cccccc">연체일</td>
+           <td bgcolor="#cccccc">반납</td>
 
-
-          ?>
-
-
-
-
-
-          <h3>도서 대여 하기</h3>
-
-          <form action="searchinsert.php" method='post'>
-          <table width="720" border="1" cellpadding="5">
-              <tr><td> 도서코드 : <input type="text" size="6" name="film_id" id="film_id">&nbsp;
-                       회원코드 : <input type="text" size="6" name="name" id="name" >&nbsp;
-                       대여 날짜 : <input type="text" size="10" name="rental" id="rental" >&nbsp;
-                       반납 날짜 : <input type="text" size="10" name="back" id="back" >&nbsp;
-
-          	</td>
-                 <td align="center">
-          	    <input type="submit" value="입력하기">
-                 </td>
-              </tr>
-           </table>
-           </form>
-					 &nbsp;
-					 &nbsp;
-					 &nbsp;
-					 <h3>도서 반납 하기</h3>
-
-					 <form action="searchdelete.php" method='post'>
-					 <table >
-							 <tr><td> 도서코드 : <input type="text" size="6" name="mod" id="mod">
-								 &nbsp;
-	<input type="submit" value="반납하기">
-
-						</td>
-
-							 </tr>
-						</table>
-						</form>
-
-
-<!-- 코드보기 -->
-
-				  <p>
-          <h3> 대여현황</h3>
-               <!-- 제목 표시 시작 -->
-           <table width="720" border="1" cellpadding="5">
-           <tr align="center" bgcolor="#eeeeee">
-
-						 <td>도서 이름</td>
-	           <td>대출자</td>
-	           <td>대출날짜</td>
-	           <td>반납날짜</td>
-
-           <td>&nbsp;</td>
            </tr>
-           <!-- 제목 표시 끝 -->
-
            <?php
-           // select 문 수행
+            $result = $conn->query("SELECT * FROM rental WHERE back < CURRENT_DATE()");
+            $number =1;
+            $today = new DateTime();
+            while ($row = $result->fetch_assoc()) {
+              $return = new DateTime($row[back]);
+              $diff = date_diff($return, $today);
+         echo "  <tr>
+                   <td> $number </td>
+                   <td> $row[name] </td>
+                   <td> $row[film_id] </td>
+                   <td> $row[back] </td>
+                   <td>";
+          echo $diff->format('%d 일');
+          echo "</td>
+          <form action='searchdelete.php' method='post'>
+            <td><input type='hidden' size='6' name='delete' value='$row[film_id]' >
+            <input type='submit' value='반납하기'>
+            </td>
+          </form>
+            </tr>";
 
-$a=$_POST['query'];
-
-$result = $conn->query("SELECT* FROM rental WHERE film_id like '$a%'");
-
-								while ( $row = $result->fetch_assoc())
-						 	 {
-						 			echo "
-						 		<tr>
-
-								<td> $row[film_id] </td>
-								<td> $row[name] </td>
-								<td> $row[rental] </td>
-								<td> $row[back] </td>
-						 					</tr>
-
-						 				 ";
-						 	 }
-                                   // 화면 출력 시 일렬번호
-
-           // DB 데이터 출력 시작
-
-              $conn->close();                  // DB 접속 끊기
-           ?>
-
+         $number++;
+     }
+$conn->close();                  // DB 접속 끊기
+     ?>
            </table>
+
+
+
+
+
+
+
 		</div>
 </div><!-- .entry-content -->
 
+</main>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	<footer class="entry-footer">
-			</footer><!-- .entry-footer -->
-
-</article><!-- #post-## -->
-			</div>
-		</div><!-- //Contents -->
-
-
+<?php
+include "footer.html";
+}
+?>
 
 <!-- //Footer -->
 
@@ -219,9 +160,6 @@ var total_search = {"ajaxUrl":"https:\/\/libweb.pknu.ac.kr\/wp-admin\/admin-ajax
     ga('send', 'pageview');
 
 </script>
-
-
-
 
 </body>
 </html>

@@ -13,13 +13,6 @@ if (!isset($_SESSION['useradmin'])) {
 
 <?php include "./meta.php"; ?>
 
-<!-- 메타데이터 -->
-<h1 class="off-screen">부경대학교 도서관</h1>
-<div id="skip-to-content">
-	<a href="#sub-container">본문으로 바로가기</a>
-	<a href="#primary-menu">메인 메뉴 바로가기</a>
-</div>
-
 <!-- Header -->
 <?php include "./header.php"; ?>
 <!-- //Header -->
@@ -32,17 +25,15 @@ if (!isset($_SESSION['useradmin'])) {
 
 			<div class="contents no-side">
 				<div class="contents-bar group">
-									<div class="all-search">
-
-					<form action="search2.php" method='post'>
-							<label for=""><i class="fa fa-book" aria-hidden="true"></i> 통합검색</label>
-							<div class="search-box">
-								<input type="text" id="query" name="query" title="검색어를 입력하세요" placeholder="검색어를 입력하세요">
-								<button type="submit" title="검색"><i class="fa fa-search" aria-hidden="true"></i><span class="off-screen">검색</span></button>
-							</div>
-
-						</form>
-					</div>
+          <div id="sc-all">
+              <div class="search-box" style="width:250px; margin-right: 0px;">
+            <form id="query" action="search2.php" method="post">
+              <label for=""><i class="fa fa-book" aria-hidden="true"></i> 통합검색</label>
+              <input type="text" id="query" name="query" title="검색어를 입력하세요." placeholder="검색어를 입력하세요" class="motion autocomplete query-focus eds-search-init">
+              <button type="submit" title="검색" class="ir img-tiny motion" style="margin-top:20px; ">검색</button>
+            </form>
+              </div>
+          </div>
 				</div>
 
 
@@ -65,18 +56,15 @@ if (!isset($_SESSION['useradmin'])) {
                     require_once 'db_connect.php';
     $conn = new mysqli($hn, $un, $pw, $database); ?>
 
-          <h3>도서 대여 하기</h3>
+          <h2>도서 대여 하기</h3>
 
           <form action="searchinsert.php" method='post'>
           <table width="720" border="1" cellpadding="5">
-              <tr><td> 도서코드 : <input type="text" size="6" name="film_id" id="film_id">&nbsp;
-                       회원코드 : <input type="text" size="6" name="name" id="name" >&nbsp;
-                       대여 날짜 : <input type="date" size="10" name="rental" id="rental" >&nbsp;
-                       반납 날짜 : <input type="date" size="10" name="back" id="back" >&nbsp;
-
-          	</td>
-                 <td align="center">
-          	    <input type="submit" value="입력하기">
+              <tr>
+                <td> 도서코드 : <input type="text" name="film_id"></td>
+                <td> 회원코드 : <input type="text" name="name"></td>
+                <td> 대여 날짜 : <input type="date" name="rental"></td>
+                 <td align="center"> <input type="submit" value="입력하기">
                  </td>
               </tr>
            </table>
@@ -84,13 +72,53 @@ if (!isset($_SESSION['useradmin'])) {
 					 &nbsp;
 					 &nbsp;
 					 &nbsp;
-					 <h3>도서 반납 하기</h3>
+
+           <h2> 예약현황</h2>
+           <table width= "800" border="1" cellpadding="10">
+           <tr align="center">
+           <td bgcolor="#cccccc">일련번호</td>
+           <td bgcolor="#cccccc">예약회원</td>
+           <td bgcolor="#cccccc">예약도서</td>
+           <td bgcolor="#cccccc">예약시간</td>
+           <td bgcolor="#cccccc">예약삭제</td>
+           <td bgcolor="#cccccc">대여</td>
+
+           </tr>
+           <?php
+            $result = $conn->query("SELECT * FROM reserv ORDER BY time_stamp ASC");
+            $order = $conn->query("SELECT count(*) FROM reserv where");
+            $number =1;
+            $today = date("Y-m-d");
+            while ($row = $result->fetch_assoc()) {
+         echo "  <tr>
+                   <td> $number </td>
+                   <td> $row[userid] </td>
+                   <td> $row[title] </td>
+                   <td> $row[time_stamp] </td>
+              <form action='searchreservdel.php' method='post'>
+               <input type='hidden' name='delete' id='delete' value='$row[title]'>
+               <td>  <input type='submit'  value='예약삭제'></td>
+              </form>
+
+              <form action='searchinsert.php' method='post'>
+                <input type='hidden' name='film_id' value='$row[title]'>
+                <input type='hidden' name='name' value='$row[userid]'>
+                <input type='hidden' name='rental' value='$today'>
+                <td>  <input type='submit'  value='대여'></td>
+                           </form>
+               </tr>
+                    ";
+         $number++;
+     }?>
+           </table>
+
+					 <h2>도서 반납 하기</h3>
 
 					 <form action="searchdelete.php" method='post'>
 					 <table >
-							 <tr><td> 도서코드 : <input type="text" size="6" name="mod" id="mod">
+							 <tr><td> 도서이름 : <input type="text" size="6" name="delete" >
 								 &nbsp;
-	<input type="submit" value="반납하기">
+	             <input type="submit" value="반납하기">
 
 						</td>
 
@@ -98,40 +126,39 @@ if (!isset($_SESSION['useradmin'])) {
 						</table>
 						</form>
 
+
 <!-- 코드보기 -->
 
 				  <p>
-          <h3> 대여현황</h3>
+          <h2> 대여현황</h3>
                <!-- 제목 표시 시작 -->
-           <table width="720" border="1" cellpadding="5">
-           <tr align="center" bgcolor="#eeeeee">
-
-           <td>도서 이름</td>
-           <td>대출자</td>
-           <td>대출날짜</td>
-           <td>반납날짜</td>
-
-
-           <td>&nbsp;</td>
+               <table width= "800" border="1" cellpadding="10">
+               <tr align="center">
+               <td bgcolor="#cccccc">대여도서</td>
+               <td bgcolor="#cccccc">대여회원</td>
+               <td bgcolor="#cccccc">대여날짜</td>
+               <td bgcolor="#cccccc">반납날짜</td>
+               <td bgcolor="#cccccc">반납</td>
            </tr>
            <!-- 제목 표시 끝 -->
 
            <?php
            // select 문 수행
 
-
-                $result = $conn->query("SELECT* FROM rental ");
+                $result = $conn->query("SELECT* FROM rental");
     while ($row = $result->fetch_assoc()) {
         echo "
 						 		<tr>
-
 						 					<td> $row[film_id] </td>
 						 					<td> $row[name] </td>
 						 					<td> $row[rental] </td>
 						 					<td> $row[back] </td>
-
-						 					</tr>
-
+                      <form action='searchdelete.php' method='post'>
+                        <td><input type='hidden' size='6' name='delete' value='$row[film_id]' >
+                        <input type='submit' value='반납하기'>
+                        </td>
+                      </form>
+						 				</tr>
 						 				 ";
     }
 

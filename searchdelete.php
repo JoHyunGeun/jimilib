@@ -4,7 +4,7 @@
 
  $conn = new mysqli($hn, $un, $pw, $database);
        // DB 선택
-       $a=$_POST['mod'];
+       $a=$_POST['delete'];
 
        if($conn->connect_error) die ("connection failed:". $conn->connect_error );
        //
@@ -22,12 +22,10 @@
        }else {
          echo("
                <script>
-                 window.alert('도서 반납이 실패 ㅜㅜ.')
+                 window.alert('도서 반납이 실패하였습니다.')
                    location.href = './searchbook.php';
                </script>
              ");
              exit;
        }
  ?>
-
- <?php include "./meta.php";

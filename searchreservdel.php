@@ -16,7 +16,7 @@ if ($conn->query($query)==true) {
     echo("
         <script>
           window.alert('예약 삭제가 완료되었습니다.')
-            location.href = './searchreserv.php';
+            location.href = './searchbook.php';
         </script>
       ");
     exit;

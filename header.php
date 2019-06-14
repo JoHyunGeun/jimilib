@@ -92,8 +92,8 @@
         		            <li id="menu-item-229" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-229"><a href="searchadd.php">회원 관리</a></li>
         		            <li id="menu-item-332" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-332"><a href="searchbook.php">대여 관리</a></li>
         		            <li id="menu-item-1089" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1089"><a href="searchbookad.php">도서 관리</a></li>
-        		  	        <li id="menu-item-239" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-239"><a href="searchreserv.php">회원예약 현황</a></li>
-        		    	    <li id="menu-item-240" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-240"><a href="searchrecord.php">대여기록</a></li>
+        		  	        <li id="menu-item-239" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-239"><a href="searchrecord.php">대여기록</a></li>
+        		    	    <li id="menu-item-240" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-240"><a href="overdue.php">연체현황</a></li>
         		        </ul>
         		    </li>
 
