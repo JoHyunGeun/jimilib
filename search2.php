@@ -1,7 +1,7 @@
 <?php
  include "./meta.php";
 ?>
-<?php  session_start(); ?>
+
 <!-- 메타데이터 -->
 
 

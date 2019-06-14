@@ -1,3 +1,16 @@
+<?php
+session_start();
+if (!isset($_SESSION['useradmin'])) {
+    echo("
+        <script>
+          window.alert('관리자로 로그인이 필요합니다.')
+          location.href = 'index.php'
+        </script>
+        ");
+    exit;
+} else {
+    ?>
+
 <?php include "./meta.php"; ?>
 
 <!-- 메타데이터 -->
@@ -21,8 +34,7 @@
 				<div class="contents-bar group">
 									<div class="all-search">
 
-					<form action="searchbook2.php" method='post'>
-
+					<form action="search2.php" method='post'>
 							<label for=""><i class="fa fa-book" aria-hidden="true"></i> 통합검색</label>
 							<div class="search-box">
 								<input type="text" id="query" name="query" title="검색어를 입력하세요" placeholder="검색어를 입력하세요">
@@ -49,20 +61,9 @@
 				<div class="box-m bg-gray align-center">
           <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
           <?php
-					//로그인 정보 외부파일 불러오기
-					require_once 'db_connect.php';
-
-					$conn = new mysqli($hn, $un, $pw, $database);
-                 // DB 선택
-
-
-          ?>
-
-
-
-
-
-
+                    //로그인 정보 외부파일 불러오기
+                    require_once 'db_connect.php';
+    $conn = new mysqli($hn, $un, $pw, $database); ?>
 
           <h3>도서 대여 하기</h3>
 
@@ -97,16 +98,6 @@
 						</table>
 						</form>
 
-
-
-
-
-
-
-
-
-
-
 <!-- 코드보기 -->
 
 				  <p>
@@ -130,9 +121,8 @@
 
 
                 $result = $conn->query("SELECT* FROM rental ");
-								while ( $row = $result->fetch_assoc())
-						 	 {
-						 			echo "
+    while ($row = $result->fetch_assoc()) {
+        echo "
 						 		<tr>
 
 						 					<td> $row[film_id] </td>
@@ -143,52 +133,21 @@
 						 					</tr>
 
 						 				 ";
+    }
 
-
-						 	 }
-
-
-                                   // 화면 출력 시 일렬번호
-
-           // DB 데이터 출력 시작
-
-              $conn->close();                  // DB 접속 끊기
-           ?>
+    $conn->close();                  // DB 접속 끊기?>
 
            </table>
-
-
 
 		</div>
 </div><!-- .entry-content -->
 
+</main>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	<footer class="entry-footer">
-			</footer><!-- .entry-footer -->
-
-</article><!-- #post-## -->
-			</div>
-		</div><!-- //Contents -->
-
-
+<?php
+include "footer.html";
+}
+?>
 
 <!-- //Footer -->
 

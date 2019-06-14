@@ -5,16 +5,10 @@ require_once 'db_connect.php';
 
 $conn = new mysqli($hn, $un, $pw, $database);
 
-
-
-
 $a=$_POST['id'];
 $b=$_POST['title'];
 $c=$_POST['location'];
 $d=$_POST['writer'];
-
-
-
 
 if($conn->connect_error) die ("connection failed:". $conn->connect_error );
 //
