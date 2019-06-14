@@ -20,7 +20,7 @@
                 <div id="sc-all">
                     <div class="search-box"><p class="headline">어떤 자료를 찾아드릴까요?</p></div>
                     <div class="search-box">
-            			<form id="query" action="search2.php" method="post">
+            			<form id="query" action="search2.php" method="post" autocomplete="off">
             				<input type="text" id="query" name="query" title="검색어를 입력하세요." placeholder="검색어를 입력하세요" class="motion autocomplete query-focus eds-search-init">
             				<button type="submit" title="검색" class="ir img-tiny motion">검색</button>
             			</form>

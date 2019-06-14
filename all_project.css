@@ -42,3 +42,6 @@
     border-color: lightgray;
     border-radius: 7px;
 }
+.reservation_form {
+    display: inline;
+}

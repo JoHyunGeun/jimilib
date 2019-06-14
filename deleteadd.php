@@ -24,7 +24,7 @@
     <div class="contents no-side">
 			<div class="contents-bar group">
 								<div class="all-search">
-			  <form action="searchadd2.php" method='post'>
+			  <form action="searchadd2.php" method='post' autocomplete="off">
 						<label for=""><i class="fa fa-book" aria-hidden="true"></i> 통합검색</label>
 						<div class="search-box">
 							<input type="text" id="query" name="query" title="검색어를 입력하세요" placeholder="검색어를 입력하세요">
@@ -113,7 +113,7 @@
           ?>
           </table>
 	</div>
-	
+
 	</div><!-- .entry-content -->
 </main>
 

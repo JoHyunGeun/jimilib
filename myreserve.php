@@ -52,8 +52,8 @@ else {
             					        <td bgcolor="#cccccc">일련번호</td>
                                         <td bgcolor="#cccccc">제목</td>
                                         <td bgcolor="#cccccc">저자</td>
-                                        <td bgcolor="#cccccc">도서위치</td>
-                                        <td bgcolor="#cccccc">예약하기</td>
+                                        <td bgcolor="#cccccc">대여</td>
+                                        <td bgcolor="#cccccc">예약</td>
 
                                     </tr>
                                     <?php
@@ -62,20 +62,35 @@ else {
                                     if($conn->connect_error) die ("connection failed:". $conn->connect_error );
                                     $result = $conn->query("SELECT * FROM film");
                                     while ($row = $result->fetch_assoc()) {
+                                        $title = $row['title'];
+                                        $result2 = $conn->query("SELECT COUNT(*) FROM reserv WHERE title='$title'");
+                                        $result2 = $result2->fetch_array(MYSQLI_NUM);
+                                        $count = $result2[0];
                                         echo
                                         "<tr>
                                             <td> $row[film_id] </td>
                                             <td> $row[title] </td>
                                             <td> $row[special_features] </td>
-                                            <td> $row[rating] </td>
-                                            <td>
+                                        ";
+                                        if ($count == 0) {
+                                        echo
+                                            "<td> 대여가능 </td>
+                                            <td></td>";
+                                        }
+                                        else {
+                                        echo
+                                            "<td> 대여중 </td>
+                                            <td'>
                                                 <form id='query' action='reservation.php' method='post'>
-										            <input type='hidden' name='title' id='title' value=$row[title]>
-                                                    <input type='hidden' name='special_features' id='special_features' value=$row[special_features]>
+										            <input type='hidden' name='title' id='title' value='$row[title]'>
+                                                    <input type='hidden' name='special_features' id='special_features' value='$row[special_features]'>
                                                     <input type='submit' value='예약'>
                                                 </form>
-                                            </td>
-                                        </tr>";
+                                                <p>대기인원: $count</p>
+                                            </td>";
+                                        }
+                                        echo
+                                        "</tr>";
                                     }
                                     ?>
                                 </table>

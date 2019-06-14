@@ -61,8 +61,8 @@ else {
                                              <td> $row[special_features]</td>
                                              <td>
 							                     <form id='query' action='myrentaldelete.php' method='post'>
-								                     <input type='hidden' name='title' id='title' value=$row[title]>
-                                                     <input type='hidden' name='special_features' id='special_features' value=$row[special_features]>
+								                     <input type='hidden' name='title' id='title' value='$row[title]'>
+                                                     <input type='hidden' name='special_features' id='special_features' value='$row[special_features]'>
 						                             <input type='submit' value='예약취소'>
                                                  </form>
                                              </td>
