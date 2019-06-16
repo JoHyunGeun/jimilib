@@ -49,14 +49,20 @@ else {
                                         <td bgcolor="#cccccc">제목</td>
                                         <td bgcolor="#cccccc">대여일</td>
                                         <td bgcolor="#cccccc">반납일</td>
+                                        <td bgcolor="#cccccc">반납일 까지</td>
                                     </tr>
                                     <?php
+                                    $today = new DateTime();
                                     while ( $row = $result->fetch_assoc()) {
+                                    $return = new DateTime($row['back']);
+                                    $diff = date_diff($return, $today);
+                                    $diff = $diff->format('%d 일 남음');
                                     echo "
                                   	<tr>
                                         <td> $row[film_id] </td>
                                         <td> $row[rental] </td>
                                         <td> $row[back] </td>
+                                        <td> $diff </td>
                                     </tr>
                                     ";
                                     $number++;

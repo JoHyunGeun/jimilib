@@ -85,7 +85,7 @@ $conn = new mysqli($hn, $un, $pw, $database);
 										<input type="text" id="email1" name=email1 style="width:100px;">@
 										<input type="text" id="email2" name=email2 style="width:100px;" disabled value="naver.com">
 										<select name="selectEmail" id="selectEmail" style="width:100px;, margin-right:10px">
-											<option value="1">직접입력</option>
+											<!-- <option value="1">직접입력</option> -->
 											<option value="naver.com">naver.com</option>
 											<option value="nate.com">nate.com</option>
 											<option value="hanmail.net">hanmail.com</option>
