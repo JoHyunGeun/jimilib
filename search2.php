@@ -36,19 +36,7 @@
 
 
 
-					//로그인 정보 외부파일 불러오기
-					require_once 'db_connect.php';
 
-					$conn = new mysqli($hn, $un, $pw, $database);
-
-          $a=$_POST['query'];
-
-
-
-
-          $result = $conn->query("SELECT* FROM film WHERE title like '$a%'");
-
-              $number = 1;
           ?>
 
           <h2> 도서 검색</h2>
@@ -63,6 +51,13 @@
 
           </tr>
           <?php
+          //로그인 정보 외부파일 불러오기
+					require_once 'db_connect.php';
+					$conn = new mysqli($hn, $un, $pw, $database);
+          if($conn->connect_error) die ("connection failed:". $conn->connect_error );
+          $a=$_POST['query'];
+          $result = $conn->query("SELECT* FROM film WHERE REPLACE(title, '','') like '%$a%'");
+
              while ( $row = $result->fetch_assoc())
              {
                 echo "
@@ -76,7 +71,6 @@
 
                     </tr>
                    ";
-                $number++;
              }
 
           $conn->close();
