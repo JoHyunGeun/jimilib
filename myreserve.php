@@ -63,7 +63,7 @@ else {
                                     $result = $conn->query("SELECT * FROM film");
                                     while ($row = $result->fetch_assoc()) {
                                         $title = $row['title'];
-                                        $result2 = $conn->query("SELECT COUNT(*) FROM reserv WHERE title='$title'");
+                                        $result2 = $conn->query("SELECT COUNT(*) FROM rental WHERE film_id='$title'");
                                         $result2 = $result2->fetch_array(MYSQLI_NUM);
                                         $count = $result2[0];
                                         echo
