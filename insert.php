@@ -1,5 +1,5 @@
 <?php
-$id=$_POST['id'];
+$userid=$_POST['userid'];
 $pass=$_POST['pass'];
 $name=$_POST['name'];
 $hp1=$_POST['hp1'];
@@ -15,16 +15,24 @@ require_once 'db_connect.php';
 $conn = new mysqli($hn, $un, $pw, $database);
 
 if($conn->connect_error) die ("connection failed:". $conn->connect_error );
-$query= "INSERT INTO membership (id, name, password, address, phonenum, email) values('$id','$name','$pass','$address','$hp','$email')";
 
-if ($conn->query($query)==False) {
+$id_check = "SELECT * FROM membership WHERE id='{$_POST['userid']}'";
+$result = mysqli_query($conn, $id_check);
+$row = mysqli_fetch_array($result);
+if($row >= 1) {
+			echo "<script>alert('이미 존재하는 아이디입니다.'); history.back();</script>";
+		}else{
+  $query= "INSERT INTO membership (id, name, password, address, phonenum, email) values('$userid','$name','$pass','$address','$hp','$email')";
+
+      if ($conn->query($query)==False) {
 	echo("
         <script>
-          window.alert('중복되는 아이디이거나 올바르지 않은 정보입니다.')
+          window.alert('입력하지 않은 정보가 있는지 확인해 주세요.')
           history.go(-1)
         </script>
         ");
     exit;
+}
 }
 ?>
 

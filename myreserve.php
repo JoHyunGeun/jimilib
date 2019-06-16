@@ -38,7 +38,7 @@ else {
                                     <p class="headline">제목 검색</p>
                         			<form id="query" action="search2.php" method="post">
                         				<input type="text" id="query" name="query" title="검색어를 입력하세요." placeholder="도서 제목 입력" class="motion autocomplete query-focus eds-search-init">
-                        				<button type="submit" title="검색" class="ir img-tiny motion">검색</button>
+                        				<button type="submit" title="검색" class="ir img-tiny motion" style="margin-top:70px;">검색</button>
                         			</form>
                                 </div>
                             </div>
