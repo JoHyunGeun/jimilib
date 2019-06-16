@@ -41,9 +41,9 @@
 						</header>
 						<div id="login_sync" class="login-sync">
 							<form id="query" action="logsign.php" method="post" autocomplete="off">
-							 	<input type="text" id="id" name="id" title="당신의 이름은 무엇인가요" placeholder="아이디" class="ui-form width-md autocomplete query-focus eds-search-init" value=""><br>
-								<input type="password" id="pw" name="pw" title="당신의 비밀은 무엇인가요" placeholder="비밀번호" class="ui-form width-md autocomplete query-focus eds-search-init" value=""><br><br>
-								<input type="submit" value="LOGIN" class="btn btn-bg-primary btn-search">
+							 	<input type="text" id="id" name="id" title="당신의 이름은 무엇인가요" placeholder="아이디" class="ui-form width-md autocomplete query-focus eds-search-init" value="" style="width:250px;"><br><br>
+								<input type="password" id="pw" name="pw" title="당신의 비밀은 무엇인가요" placeholder="비밀번호" class="ui-form width-md autocomplete query-focus eds-search-init" value="" style="width:250px; margin-top:-8px;"><br>
+								<input type="submit" value="LOGIN" class="btn btn-bg-primary btn-search" style="bottom:90px; left:300px; height:90px; width:150px;">
 							</form>
 						</div>
 					</div>

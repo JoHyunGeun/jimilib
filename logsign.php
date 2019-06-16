@@ -37,6 +37,7 @@ while($row=$result->fetch_assoc()) {
         $username = $row['name'];
         $useradmin = $row['admin'];
     }
+
     if($row['password']==$b) {
         $userpw=$b;
     }
@@ -49,9 +50,7 @@ if(!$userid) {
             history.go(-1)
         </script>
         ");
-}
-
-if(!$userpw) {
+}elseif(!$userpw) {
     echo("
         <script>
             window.alert('비밀번호가 틀렸습니다.')
@@ -59,6 +58,8 @@ if(!$userpw) {
         </script>
         ");
 }
+
+
 
 $_SESSION['userid'] = $userid;
 $_SESSION['username'] = $username;

@@ -36,7 +36,6 @@ else {
 		<!-- Contents -->
     <div class="contents no-side">
 			<div class="contents-bar group">
-<<<<<<< HEAD:deleteadd.php
 								<div class="all-search">
 			  <form action="searchadd2.php" method='post' autocomplete="off">
 						<label for=""><i class="fa fa-book" aria-hidden="true"></i> 통합검색</label>
@@ -45,7 +44,6 @@ else {
 							<button type="submit" title="검색"><i class="fa fa-search" aria-hidden="true"></i><span class="off-screen">검색</span></button>
 						</div>
 					</form>
-=======
         <div id="sc-all">
             <div class="search-box" style="width:250px; margin-right: 0px;">
           <form id="query" action="search2.php" method="post">
@@ -57,7 +55,6 @@ else {
         </div>
 
           </div>
->>>>>>> 135087ae152b86d47f3fe43faf190017bf016c1f:searchadd_update.php
 				</div>
 
 <!-- 회원검색 -->
@@ -106,8 +103,8 @@ else {
           <td bgcolor="#cccccc">주소</td>
           <td bgcolor="#cccccc">전화번호</td>
           <td bgcolor="#cccccc">이메일</td>
-          <td bgcolor="#cccccc">회원정보수정</td>
           <td bgcolor="#cccccc">회원삭제</td>
+          <td bgcolor="#cccccc">회원정보수정</td>
 
           <?php
 					while ( $row = $result->fetch_assoc())
@@ -138,8 +135,6 @@ else {
           </table>
 	</div>
 
-<<<<<<< HEAD:deleteadd.php
-=======
   <div class="box-m bg-gray align-center">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <h2>회원 정보 수정</h2>
@@ -187,7 +182,6 @@ else {
 
     </table>
 </div>
->>>>>>> 135087ae152b86d47f3fe43faf190017bf016c1f:searchadd_update.php
 	</div><!-- .entry-content -->
 </main>
 
