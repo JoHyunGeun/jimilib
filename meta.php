@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko-KR" class="no-js">
 <head>
-	<title>마음의양식 버억</title>
+	<title>마음의 양식을 쌓자</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="ROBOTS" content="index">

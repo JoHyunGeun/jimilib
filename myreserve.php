@@ -66,6 +66,9 @@ else {
                                         $result2 = $conn->query("SELECT COUNT(*) FROM rental WHERE film_id='$title'");
                                         $result2 = $result2->fetch_array(MYSQLI_NUM);
                                         $count = $result2[0];
+                                        $result3 = $conn->query("SELECT COUNT(*) FROM reserv WHERE title='$title'");
+                                        $result3 = $result3->fetch_array(MYSQLI_NUM);
+                                        $count2 = $result3[0];
                                         echo
                                         "<tr>
                                             <td> $row[film_id] </td>
@@ -86,7 +89,7 @@ else {
                                                     <input type='hidden' name='special_features' id='special_features' value='$row[special_features]'>
                                                     <input type='submit' value='예약'>
                                                 </form>
-                                                <p>대기인원: $count</p>
+                                                <p>대기인원: $count2</p>
                                             </td>";
                                         }
                                         echo
