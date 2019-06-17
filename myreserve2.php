@@ -36,7 +36,7 @@ else {
                             <div id="sc-all">
                                 <div class="search-box">
                                     <p class="headline">제목 검색</p>
-                        			<form id="query" action="myreserve2.php" method="post">
+                        			<form id="query" action="myreserve.php" method="post">
                         				<input type="text" id="query" name="query" title="검색어를 입력하세요." placeholder="도서 제목 입력" class="motion autocomplete query-focus eds-search-init">
                         				<button type="submit" title="검색" class="ir img-tiny motion" style="margin-top:70px;">검색</button>
                         			</form>
@@ -60,7 +60,12 @@ else {
                                     require_once 'db_connect.php';
                                     $conn = new mysqli($hn, $un, $pw, $database);
                                     if($conn->connect_error) die ("connection failed:". $conn->connect_error );
+                                    $query = $_POST['query'];
+                                    if ($query == NULL) {
                                       $result = $conn->query("SELECT * FROM film");
+                                    }else{
+                                      $result = $conn->query("SELECT* FROM film WHERE REPLACE(title, '','') like '%$query%'");
+                                    }
 
                                     while ($row = $result->fetch_assoc()) {
                                         $title = $row['title'];
