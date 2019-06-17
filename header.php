@@ -103,9 +103,9 @@
 
             		<li id="menu-item-1057" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-1057"><a href="">대여점 안내</a>
             		    <ul class="sub-menu">
-            			    <li id="menu-item-239" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-239"><a href="index2.php">대여점 소개</a></li>
-            			    <li id="menu-item-139" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-139"><a href="index2.php">이용시간</a></li>
-            			    <li id="menu-item-1144" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1144"><a href="index2.php">층별안내</a></li>
+            			    <li id="menu-item-239" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-239"><a href="index.php">대여점 소개</a></li>
+            			    <li id="menu-item-139" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-139"><a href="index.php">이용시간</a></li>
+            			    <li id="menu-item-1144" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1144"><a href="index.php">층별안내</a></li>
             		    </ul>
             		</li>
 		        </ul>

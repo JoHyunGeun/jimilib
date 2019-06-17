@@ -95,8 +95,8 @@ else {
           <td bgcolor="#cccccc">주소</td>
           <td bgcolor="#cccccc">전화번호</td>
           <td bgcolor="#cccccc">이메일</td>
-          <td bgcolor="#cccccc">회원정보수정</td>
           <td bgcolor="#cccccc">회원삭제</td>
+          <td bgcolor="#cccccc">회원정보수정</td>
 
           <?php
 					while ( $row = $result->fetch_assoc())
