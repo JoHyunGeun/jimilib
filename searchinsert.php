@@ -11,12 +11,16 @@
 	    $d = date('Y-m-d', $date);
       $num = 0;
 
-      echo("
-        <script>
-        window.alert('%a', '%b', '%c', '%d'.)
-        history.go(-1)
-        </script>
-        ");
+$result = $conn->query("SELECT * FROM membership WHERE id = '$b'");
+$num_rows = $result->$num_rows;
+if ($num_rows == 0) {
+  echo("
+    <script>
+    window.alert('없는 사용자입니다.')
+    history.go(-1)
+    </script>
+    ");
+}
 
 $result = $conn->query("SELECT * FROM reserv WHERE REPLACE(title, '','') like '%$a%' ORDER BY time_stamp ASC");
 while ($row = $result->fetch_assoc()) {
@@ -31,8 +35,8 @@ while ($row = $result->fetch_assoc()) {
       $query = "DELETE FROM reserv WHERE title='$a';";
       $result_end = mysqli_query($conn,$query) or die(mysqli_error($conn));
 			echo("
-					'대여 완료!'
 					<script>
+          window.alert('대여완료.')
 					location.href = './searchbook.php';
 					</script>
 					");
@@ -51,7 +55,6 @@ while ($row = $result->fetch_assoc()) {
   if($num == 0){ #도서가 예약되어있지 않은경우
 		$resu = $conn->query("SELECT * FROM film WHERE REPLACE(title, '','')like '%$a%'");
     $num_rows = $resu->$num_rows;
-    print "$num_rows";
 		if($num_rows == 0) { #도서가 존재
       $query ="INSERT INTO rental (film_id, name,rental,back) values('$a','$b','$c','$d');";
       $result_end = mysqli_query($conn,$query) or die(mysqli_error($conn));
@@ -64,8 +67,8 @@ while ($row = $result->fetch_assoc()) {
 			// $rl = $conn->query("INSERT INTO rentalrecord (film_id, name) values('$a','$b')");  #대여기록에 저장
 			// $de_reserv = $conn->query("DELETE FROM reserv WHERE title='$a'");
 			echo("
-					'대여 완료!'
 					<script>
+          window.alert('대여완료.')
 					location.href = './searchbook.php';
 					</script>
 					");
